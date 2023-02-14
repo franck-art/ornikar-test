@@ -39,9 +39,10 @@ jobs:
              docker push franckart/ornikar-test-world:$CIRCLE_BUILD_NUM
 
 workflows:
-    version: 2
-    build-master:
+  version: 2
+  build-deploy:
     jobs:
+      - build-hello
       - build-world:
-          requires: 
+          requires:
             - build-hello
