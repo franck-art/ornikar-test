@@ -34,6 +34,10 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
+          name: Login to dockerhub
+          command: |
+            docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
+      - run:
           name: Build application Docker image
           command: |
             docker build  -t franckart/ornikar-test-world:$CIRCLE_BUILD_NUM -f cloud-interview/apps/world/Dockerfile .
