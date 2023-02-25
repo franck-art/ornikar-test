@@ -48,21 +48,20 @@ jobs:
              docker push franckart/ornikar-test-world:$CIRCLE_SHA1
     
   codefresh-run:
-    docker:
-      - image: docker:17.05.0-ce-git
-        auth:
-          username: $DOCKERHUB_USERNAME
-          password: $DOCKERHUB_PASSWORD
-    working_directory: /app
     steps:
       - checkout
       - setup_remote_docker
       - run:
           name: Download and run codefresh
+          shell: /bin/sh
           command: |
-            docker pull codefresh/cli
+            echo "Download and run codefresh"
+            tar -xvf  https://github.com/codefresh-io/cli/releases/download/v0.82.3/codefresh-v0.82.3-linux-x64.tar.gz -C /tmp/
+            mv /tmp/codefresh  /usr/local/bin/
             codefresh auth create-context --api-key $CODEFRESH_API_KEY
             codefresh run ornikar-test/ornikar-test -v TAG=$CIRCLE_SHA1
+
+            
    
 workflows:
   version: 2
