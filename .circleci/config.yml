@@ -1,19 +1,19 @@
 version: 2
+docker:
+      - image: docker:17.05.0-ce-git
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
 jobs:
   build-hello:
     working_directory: /app
-    docker:
-      - image: docker:17.05.0-ce-git
-        auth:
-          username: $DOCKERHUB_USERNAME
-          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - setup_remote_docker
       - run:
           name: Build application Docker image
           command: |
-            docker build  -t franckart/ornikar-test-hello:$CIRCLE_BUILD_NUM -f cloud-interview/apps/hello/Dockerfile .
+            docker build  -t franckart/ornikar-test-hello:$CIRCLE_SHA1 -f cloud-interview/apps/hello/Dockerfile .
       - run:
           name: Login to dockerhub
           command: |
@@ -21,15 +21,10 @@ jobs:
       - run:
           name: Push application Docker image
           command: |
-             docker push franckart/ornikar-test-hello:$CIRCLE_BUILD_NUM
+             docker push franckart/ornikar-test-hello:$CIRCLE_SHA1
 
   build-world:
     working_directory: /app
-    docker:
-      - image: docker:17.05.0-ce-git
-        auth:
-          username: $DOCKERHUB_USERNAME
-          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - setup_remote_docker
@@ -40,12 +35,24 @@ jobs:
       - run:
           name: Build application Docker image
           command: |
-            docker build  -t franckart/ornikar-test-world:$CIRCLE_BUILD_NUM -f cloud-interview/apps/world/Dockerfile cloud-interview/apps/world
+            docker build  -t franckart/ornikar-test-world:$CIRCLE_SHA1 -f cloud-interview/apps/world/Dockerfile cloud-interview/apps/world
       - run:
           name: Push application Docker image
           command: |
-             docker push franckart/ornikar-test-world:$CIRCLE_BUILD_NUM
-
+             docker push franckart/ornikar-test-world:$CIRCLE_SHA1
+    
+   codefresh-run:
+    working_directory: /app
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Download and run codefresh
+          command: |
+            docker pull codefresh/cli
+            codefresh auth create-context --api-key $CODEFRESH_API_KEY
+            codefresh run ornikar-test/ornikar-test -v TAG=$CIRCLE_SHA1
+   
 workflows:
   version: 2
   build-deploy:
@@ -54,3 +61,7 @@ workflows:
       - build-world:
           requires:
             - build-hello
+      - codefresh-run:
+          requires:
+            - build-hello
+            - build-world
