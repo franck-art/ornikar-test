@@ -41,7 +41,7 @@ jobs:
           command: |
              docker push franckart/ornikar-test-world:$CIRCLE_SHA1
     
-   codefresh-run:
+  codefresh-run:
     working_directory: /app
     steps:
       - checkout
