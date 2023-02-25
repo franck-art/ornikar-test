@@ -1,12 +1,13 @@
 version: 2
-docker:
+
+jobs:
+  build-hello:
+    working_directory: /app
+    docker:
       - image: docker:17.05.0-ce-git
         auth:
           username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_PASSWORD
-jobs:
-  build-hello:
-    working_directory: /app
     steps:
       - checkout
       - setup_remote_docker
@@ -25,6 +26,11 @@ jobs:
 
   build-world:
     working_directory: /app
+    docker:
+      - image: docker:17.05.0-ce-git
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - setup_remote_docker
@@ -42,6 +48,11 @@ jobs:
              docker push franckart/ornikar-test-world:$CIRCLE_SHA1
     
   codefresh-run:
+    docker:
+      - image: docker:17.05.0-ce-git
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
     working_directory: /app
     steps:
       - checkout
