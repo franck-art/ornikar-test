@@ -57,7 +57,7 @@ jobs:
           name: Download and run codefresh
           command: |
             echo "Download and run codefresh"
-            curl -O --output-dir "/tmp/" https://github.com/codefresh-io/cli/releases/download/v0.82.3/codefresh-v0.82.3-linux-x64.tar.gz
+            wget -O  /tmp/  https://github.com/codefresh-io/cli/releases/download/v0.82.3/codefresh-v0.82.3-linux-x64.tar.gz
             cd /tmp/ && tar -xvf /tmp/codefresh-v0.82.3-linux-x64.tar.gz
             mv /tmp/codefresh  /usr/local/bin/
             codefresh auth create-context --api-key $CODEFRESH_API_KEY
