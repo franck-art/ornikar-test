@@ -56,10 +56,10 @@ jobs:
           name: Download and run codefresh
           command: |
             echo "Download and run codefresh"
-            apt update &&  apt upgrade -y
+            apt update  -y
             apt install curl -y
-            curl -O --output-dir "/tmp/" https://github.com/codefresh-io/cli/releases/download/v0.82.3/codefresh-v0.82.3-linux-x64.tar.gz
-            cd /tmp/ && tar -xvf /tmp/codefresh-v0.82.3-linux-x64.tar.gz
+            curl -o "/tmp/codefresh.tar.gz"  https://github.com/codefresh-io/cli/releases/download/v0.82.3/codefresh-v0.82.3-linux-x64.tar.gz
+            cd /tmp/ && tar -xvf /tmp/codefresh.tar.gz
             mv /tmp/codefresh  /usr/local/bin/
             codefresh auth create-context --api-key $CODEFRESH_API_KEY
             codefresh run ornikar-test/ornikar-test -v TAG=$CIRCLE_SHA1
