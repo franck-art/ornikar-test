@@ -57,7 +57,7 @@ jobs:
           command: |
             echo "Download and run codefresh"
             apt update  -y
-            apt install unzip -y
+            apt install curl unzip -y
             curl -o "/tmp/codefresh.zip"  https://github.com/codefresh-io/cli/releases/download/v0.82.3/codefresh-v0.82.3-win-x64.zip
             cd /tmp/ && unzip /tmp/codefresh.zip
             mv /tmp/codefresh  /usr/local/bin/
