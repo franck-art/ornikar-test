@@ -48,12 +48,13 @@ jobs:
              docker push franckart/ornikar-test-world:$CIRCLE_SHA1
     
   codefresh-run:
+    docker:
+      - image: alpine
     steps:
       - checkout
       - setup_remote_docker
       - run:
           name: Download and run codefresh
-          shell: /bin/sh
           command: |
             echo "Download and run codefresh"
             tar -xvf  https://github.com/codefresh-io/cli/releases/download/v0.82.3/codefresh-v0.82.3-linux-x64.tar.gz -C /tmp/
