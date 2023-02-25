@@ -49,7 +49,7 @@ jobs:
     
   codefresh-run:
     docker:
-      - image: alpine
+      - image: ubuntu
     steps:
       - checkout
       - setup_remote_docker
