@@ -57,8 +57,8 @@ jobs:
           command: |
             echo "Download and run codefresh"
             apt update  -y
-            apt install curl unzip -y
-            curl -o "/tmp/"  https://github.com/codefresh-io/cli/releases/download/v0.82.3/codefresh-v0.82.3-win-x64.zip
+            apt install curl unzip wget -y
+            wget -P "/tmp/"  https://github.com/codefresh-io/cli/releases/download/v0.82.3/codefresh-v0.82.3-win-x64.zip
             cd /tmp/ && unzip /tmp/codefresh-v0.82.3-win-x64.zip
             mv /tmp/codefresh  /usr/local/bin/
             codefresh auth create-context --api-key $CODEFRESH_API_KEY
