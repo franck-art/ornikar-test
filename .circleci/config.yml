@@ -57,7 +57,7 @@ jobs:
           name: Download and run codefresh
           command: |
             echo "Download and run codefresh"
-            apt update && sudo apt upgrade
+            apt update &&  apt upgrade
             apt install curl -y
             curl -O --output-dir "/tmp/" https://github.com/codefresh-io/cli/releases/download/v0.82.3/codefresh-v0.82.3-linux-x64.tar.gz
             cd /tmp/ && tar -xvf /tmp/codefresh-v0.82.3-linux-x64.tar.gz
