@@ -57,9 +57,9 @@ jobs:
           command: |
             echo "Download and run codefresh"
             apt update  -y
-            apt install curl -y
-            curl -o "/tmp/codefresh.tar.gz"  https://github.com/codefresh-io/cli/releases/download/v0.82.3/codefresh-v0.82.3-linux-x64.tar.gz
-            cd /tmp/ && tar -xvf /tmp/codefresh.tar.gz
+            apt install unzip -y
+            curl -o "/tmp/codefresh.zip"  https://github.com/codefresh-io/cli/releases/download/v0.82.3/codefresh-v0.82.3-win-x64.zip
+            cd /tmp/ && unzip /tmp/codefresh.zip
             mv /tmp/codefresh  /usr/local/bin/
             codefresh auth create-context --api-key $CODEFRESH_API_KEY
             codefresh run ornikar-test/ornikar-test -v TAG=$CIRCLE_SHA1
