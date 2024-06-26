@@ -34,6 +34,10 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            ['sh', '-c']
+          args:
+            ['source /vault/secrets/config && yarn run start']
           ports:
             - name: hello
               containerPort: 3000
