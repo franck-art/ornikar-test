@@ -31,6 +31,7 @@ podAnnotations:
       {{- with secret "secret/data/app/hello/config" -}}
           export VAULT_HELLO_HOST="{{ .Data.data.VAULT_HELLO_HOST }}"
           export VAULT_HELLO_PORT="{{ .Data.data.VAULT_HELLO_PORT }}"
+          export PORT="{{ .Data.data.PORT }}"
       {{- end }}
 
 podSecurityContext: {}
